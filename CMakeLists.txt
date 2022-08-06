@@ -62,16 +62,16 @@ endif()
 
 set (CMAKE_FIND_FRAMEWORK NEVER)
 find_package(Python COMPONENTS Interpreter Development REQUIRED)
-add_subdirectory(pybind11)
 
-if(NOT MSVC)
-    # These compile definitions are not meaningful for MSVC
-    add_compile_options(-Wall -g -O3 -fvisibility=hidden -Wno-unknown-pragmas)
-else()
-    # add_compile_options(/Wall /Zi)
-    # add_link_options(/DEBUG)
-endif()
+# if(NOT MSVC)
+#     # These compile definitions are not meaningful for MSVC
+#     add_compile_options(-Wall -g -O3 -fvisibility=hidden -Wno-unknown-pragmas)
+# else()
+#     # add_compile_options(/Wall /Zi)
+#     # add_link_options(/DEBUG)
+# endif()
 
+include(pybind11)
 target_link_libraries(diffvg pybind11::pybind11)
 # if(WIN32)
 #     # See: https://pybind11.readthedocs.io/en/master/compiling.html#advanced-interface-library-target
