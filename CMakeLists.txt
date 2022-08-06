@@ -38,8 +38,7 @@ if(CMAKE_CUDA_COMPILER)
     set(DIFFVG_CUDA ON)
     enable_language(CUDA)
     message(STATUS "CUDA found, build with CUDA support")
-    find_package(CUDA REQUIRED)
-    set(CMAKE_CUDA_STANDARD 11)
+    set(CMAKE_CUDA_STANDARD 14)
 
     # if(NOT WIN32)
         # Hack: for some reason the line above doesn't work on some Linux systems.
@@ -48,10 +47,11 @@ if(CMAKE_CUDA_COMPILER)
     # endif()
 
     target_compile_definitions(diffvg PUBLIC COMPILE_WITH_CUDA)
+    set_target_properties(diffvg PROPERTIES CUDA_ARCHITECTURES "60;72")
     set_source_files_properties(
         diffvg.cpp
         scene.cpp
-        PROPERTIES CUDA_SOURCE_PROPERTY_FORMAT OBJ)
+        PROPERTIES LANGUAGE CUDA)
 else()
     message(STATUS "CUDA not found, build without CUDA support")
     include(thrust)
