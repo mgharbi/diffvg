@@ -7,3 +7,5 @@ from .parse_svg import *
 from .color import *
 from .optimize_svg import *
 from .save_svg import *
+
+__version__ = "0.0.1"

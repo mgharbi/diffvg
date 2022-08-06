@@ -60,18 +60,19 @@ else()
     target_link_libraries(diffvg Thrust)
 endif()
 
+set (CMAKE_FIND_FRAMEWORK NEVER)
 find_package(Python COMPONENTS Interpreter Development REQUIRED)
 add_subdirectory(pybind11)
 
-# if(NOT MSVC)
+if(NOT MSVC)
     # These compile definitions are not meaningful for MSVC
-    # add_compile_options(-Wall -g -O3 -fvisibility=hidden -Wno-unknown-pragmas)
-# else()
+    add_compile_options(-Wall -g -O3 -fvisibility=hidden -Wno-unknown-pragmas)
+else()
     # add_compile_options(/Wall /Zi)
     # add_link_options(/DEBUG)
-# endif()
+endif()
 
-target_link_libraries(diffvg pybind11::embed)
+target_link_libraries(diffvg pybind11::pybind11)
 # if(WIN32)
 #     # See: https://pybind11.readthedocs.io/en/master/compiling.html#advanced-interface-library-target
 #     target_link_libraries(diffvg pybind11::module)
@@ -79,7 +80,7 @@ target_link_libraries(diffvg pybind11::embed)
 #         SUFFIX "${PYTHON_MODULE_EXTENSION}")
 # endif()
 
-# if(APPLE)
+if(APPLE)
     # The "-undefined dynamic_lookup" is a hack for systems with
     # multiple Python installed. If we link a particular Python version
     # here, and we import it with a different Python version later.
@@ -88,8 +89,8 @@ target_link_libraries(diffvg pybind11::embed)
     # https://github.com/pybind/pybind11/blob/master/tools/pybind11Tools.cmake
     # is to not link against Python library at all and resolve the symbols
     # at compile time.
-#     set(DYNAMIC_LOOKUP "-undefined dynamic_lookup")
-# endif()
+    set(DYNAMIC_LOOKUP "-undefined dynamic_lookup")
+endif()
 
 target_link_libraries(diffvg ${DYNAMIC_LOOKUP})
 
