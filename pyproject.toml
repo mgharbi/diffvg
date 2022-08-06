@@ -1,2 +1,2 @@
 [build-system]
-requires = ["wheel", "setuptools", "torch"]
+requires = ["setuptools", "torch"]
