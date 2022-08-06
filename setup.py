@@ -91,6 +91,7 @@ if 'DIFFVG_CUDA' in os.environ:
 setup(name = 'diffvg',
       version = '0.0.1',
       install_requires = [
+          "torch",
           "svgpathtools",
           "scikit-image",
           "cssutils",
