@@ -25,16 +25,28 @@
 # THRUST_VERSION -      Version of thrust in the form "major.minor.patch".
 #
 
-find_path(THRUST_INCLUDE_DIR
-	HINTS /usr/include/cuda
-	      /usr/local/include
-	      /usr/local/cuda/include
-	      ${CUDA_INCLUDE_DIRS}
-	      ./thrust
-	      ../thrust
-	NAMES thrust/version.h
-)
+# find_path(THRUST_INCLUDE_DIR
+# 	HINTS /usr/include/cuda
+# 	      /usr/local/include
+# 	      /usr/local/cuda/include
+# 	      ${CUDA_INCLUDE_DIRS}
+# 	      ./thrust
+# 	      ../thrust
+# 	NAMES thrust/version.h
+# )
 
-if (THRUST_INCLUDE_DIR)
-  set(THRUST_FOUND TRUE)
-endif ()
+# if (THRUST_INCLUDE_DIR)
+#   set(THRUST_FOUND TRUE)
+# endif ()
+
+include(FetchContent)
+FetchContent_Declare(
+  Thrust
+  GIT_REPOSITORY https://github.com/NVIDIA/thrust.git
+  GIT_TAG "1.17.0"
+)
+FetchContent_MakeAvailable(Thrust)
+
+message(STATUS "Third-party: adding Thrust")
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${Thrust_SOURCE_DIR}/contrib")
